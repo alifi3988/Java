@@ -1,2 +1,2 @@
 # Java
-Exercicios resolvidos da linguagem de programação JAVA
+Estruturas da Linguagem JAVA e Exercicios resolvidos.
