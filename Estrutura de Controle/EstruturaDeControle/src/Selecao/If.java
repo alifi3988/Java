@@ -34,14 +34,14 @@ public class If {
         //definição das variaveis
         double x, y;
         String resultado = "";
-        
+  
         //entrad dos valores
         System.out.print("Informe o primeiro valor da cordenada (X): ");
         x = entrada.nextDouble();
         
         System.out.print("Informe o segundo valor da cordenada (Y): ");
         y = entrada.nextDouble();
-        
+         
         //verificação
         //se x IGUAL 0 E y IGUAL 0 => então a variavel resultado receberá o valor "Origem"
         if(x == 0 && y == 0) resultado = "Origem";
@@ -54,5 +54,6 @@ public class If {
         else if(x < 0.0 && y < 0.0) resultado = "Q3";
 
         System.out.println(resultado);
+        
     }
 }
