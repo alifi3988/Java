@@ -20,7 +20,7 @@ A saída deve apresentar o quadrante em que o ponto se encontra.
 */
 
 //importação de pacotes
-package Selecao;
+package Condicionais;
 import java.util.Scanner;
 
 //início da classe

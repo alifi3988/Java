@@ -1,4 +1,4 @@
-package Selecao;
+package Condicionais;
 
 import java.util.Scanner;
 
