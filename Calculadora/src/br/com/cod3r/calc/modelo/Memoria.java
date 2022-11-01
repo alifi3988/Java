@@ -1,40 +1,41 @@
+//importações
 package br.com.cod3r.calc.modelo;
-
 import java.util.ArrayList;
 import java.util.List;
 
+//ínicio da classe memoria
 public class Memoria {
-
-
     
+    //criação do método TipoComando (para distinguir os tipos de função)
     private enum TipoComando{
-        ZERAR, NUMERO, DIV, MULT, SUB, SOMA, IGUAL, VIRGULA;
+        ZERAR, NUMERO, DIV, MULT, SUB, SOMA, IGUAL, VIRGULA, TROCARSINAL;
     };
-
+    
     private static final Memoria instancia = new Memoria();
-    
     private final List<MemoriaObservador> observador = new ArrayList<>();
-    
     private boolean substituir = false;
     private TipoComando ultimaOperacao = null;
     private String textoAtual = "";
-    private String textoBuffer = "";
+    private String textoBuffer = "0";
     
     private Memoria() {
-        
     }
-
+    
+    //função para retornar a instanciam ou seja, o valor da memória
     public static Memoria getInstancia() {
         return instancia;
     }
     
+    
     public void adicionarObservador(MemoriaObservador observador){
         this.observador.add(observador);
     }
-
+    
+    //função para pegar o texto atual, o que foi digitado
     public String getTextoAtual() {
         return textoAtual.isEmpty() ? "0": textoAtual;
     }
+    
     
     public void processarComando(String texto){
         
@@ -44,22 +45,31 @@ public class Memoria {
             return;
         }else if(tipoComando == TipoComando.ZERAR){
             textoAtual = "";
-            textoBuffer = "";
+            textoBuffer = "0";
             substituir = false;
             ultimaOperacao = null;
         }else if(tipoComando == TipoComando.NUMERO || tipoComando == TipoComando.VIRGULA){
             textoAtual = substituir ? texto : textoAtual + texto;
             substituir = false; 
+        }else if(tipoComando == TipoComando.TROCARSINAL){
+            textoAtual = getTextoAtual();
+            if(textoAtual != "0"){
+                substituir = false; //responsável por substituir valores, após clicar em algum operador
+                ultimaOperacao = tipoComando;
+                textoAtual = obterResultadoOperacao();
+                ultimaOperacao = null;
+            }else if(textoAtual == "0"){
+                textoAtual = "";
+                textoBuffer = "0";
+                substituir = false;
+                ultimaOperacao = null;
+            } 
         }else{
             substituir = true; //responsável por substituir valores, após clicar em algum operador
             textoAtual = obterResultadoOperacao();
             textoBuffer = textoAtual;
             ultimaOperacao = tipoComando;
-            
         }
-        
-        
-        
         observador.forEach(o -> o.valorAlterado(getTextoAtual()));
     }
     //método que vai retornar um tipo de comando     
@@ -92,13 +102,15 @@ public class Memoria {
                 return TipoComando.VIRGULA;
             }else if("=".equals(texto)){
                 return TipoComando.IGUAL;
+            }else if("+/-".equals(texto)){
+                return TipoComando.TROCARSINAL;
             }
         }
         return null;
     }
     
     private String obterResultadoOperacao() {
-        if(ultimaOperacao == null) return this.textoAtual;
+        if(ultimaOperacao == null || ultimaOperacao == TipoComando.IGUAL) return this.textoAtual;
         
         //pegando o texto do Buffer, subistituindo a vírgula pelo ".", para realizar a operação
         double numeroBuffer = Double.parseDouble(textoBuffer.replace(",", "."));
@@ -126,6 +138,12 @@ public class Memoria {
                     else{
                         resultado = numeroBuffer / numeroAtual;
                     }
+                    break;
+                case TROCARSINAL:
+                    resultado = (numeroAtual) * (-1);
+                    System.out.println(resultado);
+                    System.out.println(numeroAtual);
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -136,7 +154,4 @@ public class Memoria {
         boolean inteiro = resultadoString.endsWith(",0");
         return inteiro ? resultadoString.replace(",0", "") : resultadoString;
     }
-    
-    
-    
 }
