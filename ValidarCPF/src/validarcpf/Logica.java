@@ -8,7 +8,6 @@ public class Logica {
         
         //realizando o tratamento do texto
         String tratado = tratarTexto(texto);
-        System.out.println(tratado);
         int tamanho = tratado.length();
         int vet1[] = new int[tamanho];
         int vet2[] = new int[tamanho];
@@ -98,7 +97,7 @@ public class Logica {
                     numero = Integer.parseInt(num+"");
                     resultado = resultado + numero;
                 } catch (NumberFormatException e) {
-                    System.out.println("Não é um número");
+
                 }
             }
         }

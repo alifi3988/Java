@@ -1,0 +1,15 @@
+
+-- CRIANDO A TABLE CIDADE COM A CHAVE ESTRANGEIRA
+
+CREATE TABLE IF NOT EXISTS tb_cidade(
+
+    id_cidade           INTEGER AUTO_INCREMENT,
+    nome                VARCHAR(40) NOT NULL,
+    id_estado           INTEGER UNSIGNED NOT NULL,
+    area                DECIMAL(10,2),
+    CONSTRAINT tb_cidade_pk PRIMARY KEY (id_cidade),
+    CONSTRAINT tb_cidade_fk_id_estado FOREIGN KEY (id_estado)
+        REFERENCES tb_estado (id_estado)
+);
+
+SELECT * FROM `tb_cidade`;

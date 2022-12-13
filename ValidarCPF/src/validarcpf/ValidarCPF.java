@@ -11,7 +11,5 @@ public class ValidarCPF {
         
         //chamando a tela
         new Layout();
-
     }  
-    
 }
