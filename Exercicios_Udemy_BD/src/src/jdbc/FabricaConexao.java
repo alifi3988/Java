@@ -1,6 +1,5 @@
 package src.jdbc;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -36,17 +35,11 @@ public class FabricaConexao {
      private static Properties getProperties() throws IOException{
          
         try {
-
             String caminho = "conexao.properties";
             Properties prop = new Properties();
-            System.out.println(prop);
             
             prop.load(FabricaConexao.class.getResourceAsStream(caminho));
-            
-            
-            System.out.println(prop);
-            
-            
+
             return prop;       
             
          } catch (NullPointerException e) {
