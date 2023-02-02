@@ -1,6 +1,7 @@
 package br.com.cod3r.calc.visao;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import javax.swing.JFrame;
 
 public class Calculadora extends JFrame{
@@ -8,7 +9,6 @@ public class Calculadora extends JFrame{
     public Calculadora() {
         
         //como estou fazendo a herança da Classe com JFrame, isso ajuda a não ficar colocando JFrame
-        
         organizarLayout();
         
         setSize(335, 542); // tamanho da tela
@@ -21,7 +21,7 @@ public class Calculadora extends JFrame{
         setLayout(new BorderLayout());
         
         Display display = new Display();
-        display.setPreferredSize(new Dimension(335,150));
+        display.setPreferredSize(new Dimension(335,100));
         add(display, BorderLayout.NORTH);
         
         Teclado teclado = new Teclado();

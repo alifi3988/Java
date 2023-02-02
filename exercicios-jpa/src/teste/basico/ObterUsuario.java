@@ -20,18 +20,14 @@ public class ObterUsuario {
         EntityManagerFactory emf = Persistence
                 .createEntityManagerFactory("exercicios-jpa");
         EntityManager em = emf.createEntityManager();
-        
-        Usuario usr1 = em.find(Usuario.class, 3L);
-        
-        System.out.println("Nome do usuário: " + usr1.getNome());
-        
+
+        try{
+           Usuario usr1 = em.find(Usuario.class, 2L);
+           System.out.println("Nome do usuário: " + usr1.getNome());
+        }catch(Exception e){
+            System.out.println("Erro: " + e.getMessage());
+        }    
         em.close();
-        emf.close();
-        
-        
-        
-        
-        
+        emf.close();  
     }
-    
 }

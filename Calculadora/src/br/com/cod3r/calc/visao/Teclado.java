@@ -1,23 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.cod3r.calc.visao;
-
 import br.com.cod3r.calc.modelo.Memoria;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-/**
- *
- * @author alifi
- */
 public class Teclado extends JPanel implements ActionListener{
     
     private final Color COR_CINZA_ESCURO = new Color(68,68,68);
@@ -89,8 +79,7 @@ public class Teclado extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() instanceof JButton){
-            JButton botao = (JButton) e.getSource();
+        if(e.getSource() instanceof JButton botao){
             Memoria.getInstancia().processarComando(botao.getText());
         }
     }

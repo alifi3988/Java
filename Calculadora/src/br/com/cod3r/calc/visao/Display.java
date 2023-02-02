@@ -13,6 +13,7 @@ public class Display extends JPanel implements MemoriaObservador{
     //add como diminuir a letra conforme a quantidade
     
     private JLabel label = new JLabel();
+    
     public Display() {
         
         Memoria.getInstancia().adicionarObservador(this);
@@ -23,7 +24,21 @@ public class Display extends JPanel implements MemoriaObservador{
         label.setFont(new Font("curier", Font.PLAIN, 40));
         
         
-        setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 25));
+        setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 12));
+        add(label);
+    }
+    
+    public Display(int fonte) {
+        
+        Memoria.getInstancia().adicionarObservador(this);
+        
+        setBackground(new Color(49,49,49));
+        label = new JLabel(Memoria.getInstancia().getTextoAtual());
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("curier", Font.PLAIN, fonte));
+        
+        
+        setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 20));
         add(label);
     }
 
