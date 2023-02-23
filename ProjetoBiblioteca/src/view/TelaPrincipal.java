@@ -4,13 +4,13 @@
  */
 package view;
 
+import classes.Usuarios;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -20,10 +20,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaPrincipal
+     * @param usuarioLogado
      */
-    public TelaPrincipal() {
+    private final Usuarios usuarioLogado;
+    
+    
+    public TelaPrincipal(Usuarios usuarioLogado) {
         initComponents();
+        
+        this.usuarioLogado = usuarioLogado;
     }
+    
+    public TelaPrincipal(){
+        initComponents();
+        this.usuarioLogado = null;
+    }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -281,7 +294,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
 
         
-        TelaLeitoresCadastro telaLeitores = new TelaLeitoresCadastro();       
+        TelaLeitoresCadastro telaLeitores = new TelaLeitoresCadastro(usuarioLogado);       
         dkp1.add(telaLeitores);
         
         //pegando as dimensões da tela

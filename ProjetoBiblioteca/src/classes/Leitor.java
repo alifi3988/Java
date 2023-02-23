@@ -1,11 +1,11 @@
 package classes;
 
-
-
 public final class Leitor {
     
     //atributos dos Leitores
-    private String  nome;
+    private int    id_leitor;
+    private int    id_usuario;
+    private String nome;
     private String dataNascimento;
     private String cpf;
     private String rg;
@@ -21,6 +21,8 @@ public final class Leitor {
     
     //métodos
     public Leitor() {
+        setId_leitor(0);
+        setId_usuario(0);
         setNome(null);
         setDataNascimento(null);
         setCpf(null);
@@ -35,8 +37,10 @@ public final class Leitor {
         setTelefone(null);
     }
 
-    public Leitor(String nome, String dataNascimento, String cpf, String rg, String sexo, String cep, String bairro, String complemento, String endereco, String numero, String estado, String telefone) {
+    public Leitor(int id_leitor, int id_usuario, String nome, String dataNascimento, String cpf, String rg, String sexo, String cep, String bairro, String complemento, String endereco, String numero, String estado, String telefone) {
         
+        setId_leitor(id_leitor);
+        setId_usuario(id_usuario);
         setNome(nome);
         setDataNascimento(dataNascimento);
         setCpf(cpf);
@@ -53,6 +57,9 @@ public final class Leitor {
     }
 
     public void zerarLeitor() {
+        
+        setId_leitor(0);
+        setId_usuario(0);
         setNome(null);
         setDataNascimento(null);
         setCpf(null);
@@ -68,6 +75,23 @@ public final class Leitor {
     }
 
     //métodos GETS e SETS   
+
+    public int getId_leitor() {
+        return id_leitor;
+    }
+
+    public void setId_leitor(int id_leitor) {
+        this.id_leitor = id_leitor;
+    }
+    
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -164,10 +188,11 @@ public final class Leitor {
         this.telefone = telefone;
     }
     
-    public boolean adicionarLeitor(String nome, String dataNascimento, String cpf, 
+    public boolean adicionarLeitor(int id_leitor, String nome, String dataNascimento, String cpf, 
             String rg, String sexo, String cep, String bairro, String complemento,
             String endereco, String numero, String estado, String telefone){
         try{
+            setId_leitor(id_leitor);
             setNome(nome);
             setDataNascimento(dataNascimento);
             setCpf(cpf);
@@ -193,7 +218,9 @@ public final class Leitor {
     @Override
     public String toString() {
         
-        String leitor = nome + 
+        String leitor = id_leitor +
+                "," + id_usuario +
+                "," + nome + 
                 "," + dataNascimento + 
                 "," + cpf + 
                 "," + rg + 

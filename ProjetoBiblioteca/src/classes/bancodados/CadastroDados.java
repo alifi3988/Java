@@ -16,20 +16,16 @@ public class CadastroDados {
                     Connection conexao = FabricaConexao.getConexao()) {
                 //query de cadastro
                 String sql = "INSERT INTO tb_usuarios(nome_usuario, usuario, senha, estado) VALUES (?,?,?,?);";
-                PreparedStatement stmt = conexao.prepareStatement(sql);
-                
-                System.out.println(nome_usuario);
-                System.out.println(usuario);
-                System.out.println(senha);
-                
                 //colocando os valores nos parâmetros do SQL
-                stmt.setString(1, nome_usuario);
-                stmt.setString(2, usuario);
-                stmt.setString(3, senha);
-                stmt.setBoolean(4, true); //passando o valor direto
-                //executando a query
-                stmt.execute();
-                //fechando a conexao
+                try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+                    //colocando os valores nos parâmetros do SQL
+                    stmt.setString(1, nome_usuario);
+                    stmt.setString(2, usuario);
+                    stmt.setString(3, senha);
+                    stmt.setBoolean(4, true); //passando o valor direto
+                    //executando a query
+                    stmt.execute();
+                }
             }
             return true;
             
@@ -39,4 +35,46 @@ public class CadastroDados {
         }
     }
     
+    
+    public Boolean cadastroLeitor(int id_usuario, String nome, String dataNascimento, String cpf, 
+            String rg, String sexo, String cep, String bairro, String complemento, String endereco, String numero, 
+            String estado, String telefone){
+
+        try {
+            //realizando a conexão com o banco de dados
+            Connection conexao = FabricaConexao.getConexao();
+
+            //realizando o SQL/Query
+            String sql = "INSERT INTO tb_leitores(id_usuario, id_usuario nome, dataNascimento, cpf, rg, sexo, cep, bairro, complemento, endereco, numero, estado, telefone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            
+            //colocando os valores dos parâmetros
+            try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+                //colocando os valores dos parâmetros
+                stmt.setInt(1, id_usuario);
+                stmt.setString(2, nome); 
+                stmt.setString(3, dataNascimento);
+                stmt.setString(4, cpf);
+                stmt.setString(5, rg);
+                stmt.setString(6, sexo);
+                stmt.setString(7, cep);
+                stmt.setString(8, bairro);
+                stmt.setString(9, complemento);
+                stmt.setString(10, endereco);
+                stmt.setString(11, numero);
+                stmt.setString(12, "SP");
+                stmt.setString(13, telefone);
+                
+                System.out.println(stmt);
+                //executando
+                stmt.execute();
+            }
+            return true;
+            
+        } catch (SQLException e) {
+            
+            System.out.println("Erro banco de dados cadastro leitor. " + e.getMessage());
+        }
+
+        return false;
+    }
 }

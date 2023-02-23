@@ -8,7 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecuperacaoDados {
+public class RecuperacaoDados{
+    
     
     
     //recuperação de dados - usuários
@@ -64,5 +65,6 @@ public class RecuperacaoDados {
         System.out.println("Retornando lista de null");
         return null;
     }//fechamento do método 
+
  
 }
