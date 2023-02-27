@@ -1,2 +1,2 @@
 # Java
-Exercícios e projetos realizados na linguagem JAVA.
+Exercicios e projetos realizados na linguagem de programação JAVA.
