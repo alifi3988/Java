@@ -38,14 +38,14 @@ public class CadastroDados {
     
     public Boolean cadastroLeitor(int id_usuario, String nome, String dataNascimento, String cpf, 
             String rg, String sexo, String cep, String bairro, String complemento, String endereco, String numero, 
-            String estado, String telefone){
+            String estado, String telefone, Boolean status){
 
         try {
             //realizando a conexão com o banco de dados
             Connection conexao = FabricaConexao.getConexao();
 
             //realizando o SQL/Query
-            String sql = "INSERT INTO tb_leitores(id_usuario, id_usuario nome, dataNascimento, cpf, rg, sexo, cep, bairro, complemento, endereco, numero, estado, telefone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            String sql = "INSERT INTO tb_leitores(id_usuario, nome, dataNascimento, cpf, rg, sexo, cep, bairro, complemento, endereco, numero, estado, telefone, status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
             
             //colocando os valores dos parâmetros
             try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
@@ -54,6 +54,7 @@ public class CadastroDados {
                 stmt.setString(2, nome); 
                 stmt.setString(3, dataNascimento);
                 stmt.setString(4, cpf);
+                System.out.println("CPF:"+cpf);
                 stmt.setString(5, rg);
                 stmt.setString(6, sexo);
                 stmt.setString(7, cep);
@@ -61,8 +62,9 @@ public class CadastroDados {
                 stmt.setString(9, complemento);
                 stmt.setString(10, endereco);
                 stmt.setString(11, numero);
-                stmt.setString(12, "SP");
+                stmt.setString(12, estado);
                 stmt.setString(13, telefone);
+                stmt.setBoolean(14, status);
                 
                 System.out.println(stmt);
                 //executando

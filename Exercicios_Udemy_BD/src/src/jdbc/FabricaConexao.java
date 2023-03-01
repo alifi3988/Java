@@ -15,12 +15,10 @@ public class FabricaConexao {
          //try | catch para tratamento de erro
          try {
              Properties prop = getProperties();
-             System.out.println("Teste 1");
              //criando os dados de aceso ao BD
              final String url = prop.getProperty("banco.url");
              final String usr = prop.getProperty("banco.urs");
              final String psswd = prop.getProperty("banco.pssd");
-             System.out.println("Teste 2");
              
              //retornando a conexão com o banco de dados
              return DriverManager.getConnection(url, usr, psswd);

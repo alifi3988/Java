@@ -9,6 +9,11 @@ public class Usuarios {
     private String usuario;
     private String senha;
     private boolean estado;
+    
+    //construtores
+    public Usuarios(){
+        super();
+    }
 
     public Usuarios(String nome_usuario, String usuario, String senha, boolean estado) {
         super();
@@ -27,7 +32,9 @@ public class Usuarios {
         this.estado = estado;
     }
     
-    //métodos
+    
+    
+    //métodos GETS E SETS
     public int getId_usuario() {
         return id_usuario;
     }

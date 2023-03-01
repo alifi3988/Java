@@ -63,6 +63,11 @@ public class TelaRetiradaLivro extends javax.swing.JInternalFrame {
         jLabel5.setText("Tempo de leitura");
 
         cbTempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "1 Semana ", "15 Dias", "1 Mês", "1 Mês e meio", "2 Meses" }));
+        cbTempo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTempoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Data de Devolução ou Renovação");
 
@@ -119,6 +124,11 @@ public class TelaRetiradaLivro extends javax.swing.JInternalFrame {
         });
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -206,17 +216,17 @@ public class TelaRetiradaLivro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtIDLivroActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        
-        //limpando os campos
-        txtIDLeitor.setText("");
-        txtIDLivro.setText("");
-        txtNomeLeitor.setText("");
-        txtNomeLivro.setText("");
-        txtDataEntrega.setText("");
-        cbTempo.setSelectedIndex(0);
-        
-        
+
+        limparCampos();
     }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+         
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void cbTempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTempoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTempoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -239,4 +249,15 @@ public class TelaRetiradaLivro extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNomeLeitor;
     private javax.swing.JTextField txtNomeLivro;
     // End of variables declaration//GEN-END:variables
+
+    private void limparCampos() {
+        //limpando os campos
+        txtIDLeitor.setText("");
+        txtIDLivro.setText("");
+        txtNomeLeitor.setText("");
+        txtNomeLivro.setText("");
+        txtDataEntrega.setText("");
+        cbTempo.setSelectedIndex(0);
+    }
+
 }

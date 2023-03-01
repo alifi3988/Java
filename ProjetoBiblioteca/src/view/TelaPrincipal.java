@@ -10,6 +10,7 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import javax.swing.JInternalFrame;
 
 
 /**
@@ -27,12 +28,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     public TelaPrincipal(Usuarios usuarioLogado) {
         initComponents();
-        
         this.usuarioLogado = usuarioLogado;
     }
     
     public TelaPrincipal(){
         initComponents();
+        this.usuarioLogado = null;
+    }
+    
+    public TelaPrincipal(JInternalFrame FrameInterno){
+        
+        dkp1.add(FrameInterno);
         this.usuarioLogado = null;
     }
     
@@ -77,6 +83,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Inicial");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        dkp1.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout dkp1Layout = new javax.swing.GroupLayout(dkp1);
         dkp1.setLayout(dkp1Layout);

@@ -1,5 +1,6 @@
 package view;
 
+import classes.Mensagens;
 import classes.Usuarios;
 import classes.bancodados.RecuperacaoDados;
 import java.awt.Frame;
@@ -8,8 +9,7 @@ import java.awt.Toolkit;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
-
+    
 public class TelaLogin extends javax.swing.JFrame{
 
     public TelaLogin() {
@@ -61,6 +61,16 @@ public class TelaLogin extends javax.swing.JFrame{
         jLabel2.setText("Senha");
 
         txtSenha.setToolTipText("Digite a sua senha.");
+        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSenhaActionPerformed(evt);
+            }
+        });
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyTyped(evt);
+            }
+        });
 
         btnEntrar.setBackground(new java.awt.Color(255, 255, 255));
         btnEntrar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -176,65 +186,7 @@ public class TelaLogin extends javax.swing.JFrame{
     
     
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        
-        //validação dos campos de usuário e senha
-        
-        //pegando os dados e passando para variaveis
-        String pss = new String(txtSenha.getPassword()).trim();
-        String usr = txtLogin.getText();
-        
-        if(usr.isEmpty() || pss.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Verifique os campos antes de continuar!", "Informativo", HEIGHT);
-        }else{
-            
-            //recolhendo os dados
-            RecuperacaoDados recuperacao = new RecuperacaoDados();
-            List<Usuarios> listaUsuarios;
-            listaUsuarios = new ArrayList<>();
-            listaUsuarios = recuperacao.recuperacaoDadosLogin(usr, pss);
-            
-            Boolean status = false;
-            
-                       
-            for(Usuarios i: listaUsuarios){
-                if((usr.equals(i.getUsuario())) && (pss.equals(i.getSenha()))) status = true;
-                
-                //guardar o usuário logado para poder ser usado mais tarde
-               Usuarios usuarioLogado = new Usuarios(i.getNome_usuario(), i.getUsuario(), i.getSenha(), true);
-                
-            }  
-            
-            
-            
-            //fzendo a verificação com o banco de dados
-            if(status == true){
-                    
-                //encerrando a aplicação               
-                JOptionPane.showMessageDialog(
-                        null, 
-                        "LOGIN REALIZADO COM SUCESSO!", 
-                        "Informativo", 
-                        HEIGHT);
-                Usuarios usuarioLogado = null;
-                TelaPrincipal t1 = new TelaPrincipal(usuarioLogado);
-                t1.setVisible(true);
-                t1.setExtendedState(Frame.MAXIMIZED_BOTH);
-                
-
-                URL url = this.getClass().getResource("/images/icone_menu.png"); 
-                Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url); 
-                t1.setIconImage(iconeTitulo);
-
-                this.dispose();
-            }else{
-                
-                JOptionPane.showMessageDialog(
-                        null, 
-                        "FALHA AO REALIZAR O LOGIN", 
-                        "Informativo",
-                        HEIGHT);
-            }
-        }
+        realizarVerificacaoLogin();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void lblCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastroMouseClicked
@@ -248,6 +200,14 @@ public class TelaLogin extends javax.swing.JFrame{
         cadastroLogin.setIconImage(iconeTitulo);
         
     }//GEN-LAST:event_lblCadastroMouseClicked
+
+    private void txtSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyTyped
+      
+    }//GEN-LAST:event_txtSenhaKeyTyped
+
+    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+         realizarVerificacaoLogin();
+    }//GEN-LAST:event_txtSenhaActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -298,6 +258,72 @@ public class TelaLogin extends javax.swing.JFrame{
     private javax.swing.JTextField txtLogin;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
+
+    private void realizarVerificacaoLogin() {
+        //pegando os dados e passando para variaveis
+        String pss = new String(txtSenha.getPassword()).trim();
+        String usr = txtLogin.getText();
+        
+        
+        //verificação se os campos estão vazios
+        if(usr.isEmpty() || pss.isEmpty()){
+            new Mensagens().mensagemAlerta("Dados inválidos. Verifique antes de continuar!");
+        }
+        //se não estiverem, virá dar continuidade
+        else{
+            
+            //recuperando os dados compatíveis com o banco de dados
+            RecuperacaoDados recuperacao = new RecuperacaoDados();
+            List<Usuarios> listaUsuarios;
+            
+            //retornando uma lista de usuários
+            listaUsuarios = new ArrayList<>(recuperacao.recuperacaoDadosLogin(usr, pss)); 
+            
+           //variaveis de verificação
+            Boolean status = false;
+            Usuarios usuarioLogado = new Usuarios();
+            
+            
+            
+            //verificação inicial da lista (null ou !null)
+            if(listaUsuarios != null){
+                
+                //fazendo a verificação de dados, para ver se algum é compatível
+                for(Usuarios i: listaUsuarios){
+                    if((usr.equals(i.getUsuario())) && (pss.equals(i.getSenha()))){
+                        
+                        //guardar o usuário logado para poder ser usado mais tarde
+                       usuarioLogado.setId_usuario(i.getId_usuario());
+                       usuarioLogado.setNome_usuario(i.getNome_usuario());
+                       usuarioLogado.setSenha(i.getSenha());
+                       usuarioLogado.setUsuario(i.getUsuario());
+                       usuarioLogado.setEstado(true);
+                       status = true;
+                    }
+                }  
+
+               //vazendo a verificação do resultado
+                if(status == true){
+                    //encerrando a aplicação               
+                    new Mensagens().mensagemInformativa("Login realizado com sucesso!");
+                    TelaPrincipal t1 = new TelaPrincipal(usuarioLogado);
+                    t1.setVisible(true);
+                    t1.setExtendedState(Frame.MAXIMIZED_BOTH);
+
+
+                    URL url = this.getClass().getResource("/images/icone_menu.png"); 
+                    Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url); 
+                    t1.setIconImage(iconeTitulo);
+
+                    this.dispose();
+                }else{
+                    new Mensagens().mensagemAlerta("Erro ao tentar realizar o login!");
+                }   
+            }else{
+                new Mensagens().mensagemAlerta("Erro ao tentar realizar o login!");
+            }
+        }
+    }
 
 
 }

@@ -37,7 +37,8 @@ public class BuscarCEP {
             
             json = json.replaceAll("[{},:]", "");
             json = json.replaceAll("\"", "\n");                       
-            String array[] = new String[30];
+            String array[];
+            array = new String[30];
             array = json.split("\n");
             
             setLogradouro(array[7]);            

@@ -17,6 +17,7 @@ public final class Leitor {
     private String numero;
     private String estado;
     private String telefone;
+    private Boolean status;
 
     
     //métodos
@@ -35,9 +36,10 @@ public final class Leitor {
         setNumero(null);
         setEstado(null);
         setTelefone(null);
+        setStatus(null);
     }
 
-    public Leitor(int id_leitor, int id_usuario, String nome, String dataNascimento, String cpf, String rg, String sexo, String cep, String bairro, String complemento, String endereco, String numero, String estado, String telefone) {
+    public Leitor(int id_leitor, int id_usuario, String nome, String dataNascimento, String cpf, String rg, String sexo, String cep, String bairro, String complemento, String endereco, String numero, String estado, String telefone, Boolean status) {
         
         setId_leitor(id_leitor);
         setId_usuario(id_usuario);
@@ -53,6 +55,7 @@ public final class Leitor {
         setNumero(numero);
         setEstado(estado);
         setTelefone(telefone);
+        setStatus(status);
         
     }
 
@@ -72,12 +75,13 @@ public final class Leitor {
         setNumero(null);
         setEstado(null);
         setTelefone(null);
+        setStatus(null);
     }
 
     //métodos GETS e SETS   
 
     public int getId_leitor() {
-        return id_leitor;
+        return this.id_leitor;
     }
 
     public void setId_leitor(int id_leitor) {
@@ -85,7 +89,7 @@ public final class Leitor {
     }
     
     public int getId_usuario() {
-        return id_usuario;
+        return this.id_usuario;
     }
 
     public void setId_usuario(int id_usuario) {
@@ -93,7 +97,7 @@ public final class Leitor {
     }
     
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -101,7 +105,7 @@ public final class Leitor {
     }
 
     public String getDataNascimento() {
-        return dataNascimento;
+        return this.dataNascimento;
     }
 
     public void setDataNascimento(String dataNascimento) {
@@ -109,7 +113,7 @@ public final class Leitor {
     }
 
     public String getCpf() {
-        return cpf;
+        return this.cpf;
     }
 
     public void setCpf(String cpf) {
@@ -117,7 +121,7 @@ public final class Leitor {
     }
 
     public String getRg() {
-        return rg;
+        return this.rg;
     }
 
     public void setRg(String rg) {
@@ -125,7 +129,7 @@ public final class Leitor {
     }
 
     public String getSexo() {
-        return sexo;
+        return this.sexo;
     }
 
     public void setSexo(String sexo) {
@@ -133,7 +137,7 @@ public final class Leitor {
     }
 
     public String getCep() {
-        return cep;
+        return this.cep;
     }
 
     public void setCep(String cep) {
@@ -141,7 +145,7 @@ public final class Leitor {
     }
 
     public String getBairro() {
-        return bairro;
+        return this.bairro;
     }
 
     public void setBairro(String bairro) {
@@ -149,7 +153,7 @@ public final class Leitor {
     }
 
     public String getComplemento() {
-        return complemento;
+        return this.complemento;
     }
 
     public void setComplemento(String complemento) {
@@ -157,7 +161,7 @@ public final class Leitor {
     }
 
     public String getEndereco() {
-        return endereco;
+        return this.endereco;
     }
 
     public void setEndereco(String endereco) {
@@ -165,7 +169,7 @@ public final class Leitor {
     }
 
     public String getNumero() {
-        return numero;
+        return this.numero;
     }
 
     public void setNumero(String numero) {
@@ -173,7 +177,7 @@ public final class Leitor {
     }
 
     public String getEstado() {
-        return estado;
+        return this.estado;
     }
 
     public void setEstado(String estado) {
@@ -181,18 +185,27 @@ public final class Leitor {
     }
 
     public String getTelefone() {
-        return telefone;
+        return this.telefone;
     }
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
     
-    public boolean adicionarLeitor(int id_leitor, String nome, String dataNascimento, String cpf, 
+    public Boolean getStatus(){
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status){
+        this.status = status;
+    }
+    
+    public boolean adicionarLeitor(int id_leitor, int id_usuario, String nome, String dataNascimento, String cpf, 
             String rg, String sexo, String cep, String bairro, String complemento,
-            String endereco, String numero, String estado, String telefone){
+            String endereco, String numero, String estado, String telefone, Boolean status){
         try{
             setId_leitor(id_leitor);
+            setId_usuario(id_usuario);
             setNome(nome);
             setDataNascimento(dataNascimento);
             setCpf(cpf);
@@ -205,13 +218,12 @@ public final class Leitor {
             setNumero(numero);
             setEstado(estado);
             setTelefone(telefone);
+            setStatus(status);
             
         }catch(Exception e){
-            System.out.println("Erro de inserção: " + e.getMessage());
+            System.out.println(e.getMessage());
             return false;
         }
-        
-        System.out.println("Daodos inseridos com sucesso!");
         return true;
     }
 
@@ -231,8 +243,11 @@ public final class Leitor {
                 "," + endereco + 
                 "," + numero +
                 "," + estado + 
-                "," + telefone;
+                "," + telefone + 
+                "," + status;
         
         return leitor;
     }
+
+
 }

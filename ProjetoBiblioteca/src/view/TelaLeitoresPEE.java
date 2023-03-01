@@ -1,9 +1,16 @@
 
 package view;
 
-import classes.Arquivo;
 import classes.Leitor;
+import classes.Mensagens;
+import classes.VerificadorString;
+import classes.bancodados.DesativacaoDados;
+import classes.bancodados.RecuperacaoDados;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
@@ -13,120 +20,7 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
         initComponents();   
     }
     
-    public void trazerDados(){
-        //criando o modelo da tabela
-        DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
-
-        //Zerando as linhas
-        modelo.setNumRows(0);
-       
-        //estanciando uma lista de leitores para ser add
-        ArrayList<Leitor> leitores;
-        
-        //chamndo o arquivo txt para ser lido, e colocar na tabela os valores
-        Arquivo arquivoTxt = new Arquivo();
-        leitores = arquivoTxt.lerArquivo("ArquivoLeitores");
-        
-        //criando uma stream para verificar os dados cadastrados
-        leitores.stream().forEach(pessoa -> System.out.println(pessoa.toString()));
-        
-        //realizando se a lista está vazia
-        if(leitores.isEmpty()){
-            modelo.addRow(new Object[]{
-            "Sem informaçãoes", "Sem informaçãoes","Sem informaçãoes", "Sem informaçãoes"});
-        }else{
-            try{
-                for (Leitor l : leitores) {
-                    modelo.addRow(new Object[]{
-                        l.getNome(),
-                        l.getCpf(),
-                        l.getDataNascimento(),
-                        l.getTelefone()
-                    });
-                }
-            }catch(Exception e){
-                System.out.println("Erro: " + e.getMessage() );
-            }
-        }
-    }
- 
-    public void trazerDados(String dados, String tipoDado){
-        //criando o modelo da tabela
-        DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
-
-        //Zerando as linhas
-        modelo.setNumRows(0);
-       
-        //estanciando uma lista de leitores para ser add
-        ArrayList<Leitor> leitores;
-        
-        //chamndo o arquivo txt para ser lido, e colocar na tabela os valores
-        Arquivo arquivoTxt = new Arquivo();
-        leitores = arquivoTxt.lerArquivo("ArquivoLeitores");
-        
-        //criando uma stream para verificar os dados cadastrados
-        leitores.stream().forEach(pessoa -> System.out.println(pessoa.toString()));
-        
-        //realizando se a lista está vazia
-        if(leitores.isEmpty()){
-            modelo.addRow(new Object[]{
-            "Sem informaçãoes", "Sem informaçãoes","Sem informaçãoes", "Sem informaçãoes"});
-        }else{
-            try{
-                if(null != tipoDado)switch (tipoDado) {
-                    case "nome" -> {
-                        for (Leitor l : leitores) {
-                            if(l.getNome().contains(dados)){
-                                modelo.addRow(new Object[]{
-                                    l.getNome(),
-                                    l.getCpf(),
-                                    l.getDataNascimento(),
-                                    l.getTelefone()
-                                });
-                            }
-                        }
-                    }
-                    case "cpf" -> {
-                        for (Leitor l : leitores) {
-                            if(l.getCpf().contains(dados)){
-                                modelo.addRow(new Object[]{
-                                    l.getNome(),
-                                    l.getCpf(),
-                                    l.getDataNascimento(),
-                                    l.getTelefone()
-                                });
-                            }
-                        }
-                    }
-                    case "rg" -> {
-                        for (Leitor l : leitores) {
-                            if(l.getRg().contains(dados)){
-                                modelo.addRow(new Object[]{
-                                    l.getNome(),
-                                    l.getCpf(),
-                                    l.getDataNascimento(),
-                                    l.getTelefone()
-                                });
-                            }
-                        }
-                    }
-                    case "todos" -> {
-                        for (Leitor l : leitores) {
-                            modelo.addRow(new Object[]{
-                                l.getNome(),
-                                l.getCpf(),
-                                l.getDataNascimento(),
-                                l.getTelefone()
-                            });
-                        }
-                    }
-                }
-            }catch(Exception e){
-                System.out.println("Erro: " + e.getMessage() );
-            }
-        }  
-    }
-
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -135,12 +29,13 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
         jTextArea1 = new javax.swing.JTextArea();
         btnGroupPesquisa = new javax.swing.ButtonGroup();
         jPanel6 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         PainelPEE = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         rbNome = new javax.swing.JRadioButton();
         rbCPF = new javax.swing.JRadioButton();
         rbRG = new javax.swing.JRadioButton();
-        rbTodos = new javax.swing.JRadioButton();
         jLabel32 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtDado = new javax.swing.JTextField();
@@ -166,6 +61,13 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList1);
 
         setClosable(true);
         setForeground(java.awt.Color.white);
@@ -209,23 +111,6 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
             }
         });
 
-        rbTodos.setBackground(new java.awt.Color(255, 255, 255));
-        btnGroupPesquisa.add(rbTodos);
-        rbTodos.setSelected(true);
-        rbTodos.setText("Todos");
-        rbTodos.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                rbTodosInputMethodTextChanged(evt);
-            }
-        });
-        rbTodos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbTodosActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -235,11 +120,9 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
                 .addComponent(rbNome)
                 .addGap(38, 38, 38)
                 .addComponent(rbCPF)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addComponent(rbRG)
-                .addGap(49, 49, 49)
-                .addComponent(rbTodos)
-                .addGap(33, 33, 33))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,8 +131,7 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbNome)
                     .addComponent(rbCPF)
-                    .addComponent(rbRG)
-                    .addComponent(rbTodos))
+                    .addComponent(rbRG))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -261,6 +143,11 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
         txtDado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDadoActionPerformed(evt);
+            }
+        });
+        txtDado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDadoKeyTyped(evt);
             }
         });
 
@@ -288,11 +175,11 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Data Nasc.", "Telefone"
+                "ID Leitor", "Nome", "CPF", "Telefone"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -313,7 +200,12 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tblLeitores);
 
-        btnImpressao.setText("Realizar impressão");
+        btnImpressao.setText("Verificar os dados completo");
+        btnImpressao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImpressaoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar Dados");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -334,21 +226,17 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
         PainelPEELayout.setHorizontalGroup(
             PainelPEELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PainelPEELayout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addGroup(PainelPEELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PainelPEELayout.createSequentialGroup()
-                        .addComponent(jLabel32)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(PainelPEELayout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(21, 21, 21)
+                        .addGroup(PainelPEELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(56, 56, 56)
                         .addGroup(PainelPEELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(btnPesquisar))
-                        .addGap(32, 32, 32))))
-            .addGroup(PainelPEELayout.createSequentialGroup()
-                .addGroup(PainelPEELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnPesquisar)))
                     .addGroup(PainelPEELayout.createSequentialGroup()
                         .addGap(178, 178, 178)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -357,9 +245,9 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
                         .addGroup(PainelPEELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(PainelPEELayout.createSequentialGroup()
                                 .addComponent(btnImpressao)
-                                .addGap(24, 24, 24)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnExcluir))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(23, Short.MAX_VALUE))
@@ -408,49 +296,28 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        
-        //essa será melhor com o banco de dados
-        //visto que no momento estou utilizando arquivo txt e ArrayList
+
+        //botão para editar
+        if(tblLeitores.getSelectedRowCount() == 1){
+            editarDadosSelecionado(tblLeitores.getSelectedRow());
+            
+            //criando o modelo da tabela
+            DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
+
+            //Zerando as linhas da tabela
+            modelo.setNumRows(0);
+            
+            
+        }else{
+            new Mensagens().mensagemAlerta("Para realizar a edição, deve selecionar somente uma única linha.");
+        }
         
         
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        
-        String valor = "";
-        String dados = txtDado.getText();
-        
-        if(rbCPF.isSelected()){
-            valor = "cpf";
-        }else if(rbNome.isSelected()){
-            valor = "nome";
-        }else if(rbRG.isSelected()){
-            valor = "rg";
-        }else if(rbTodos.isSelected()){
-            valor = "todos";
-        }
-        trazerDados(dados, valor);
- 
+        MostrarDadosTable();
     }//GEN-LAST:event_btnPesquisarActionPerformed
-
-    private void rbTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTodosActionPerformed
-        
-        //verificando de qual está selecionado
-        
-        if(rbTodos.isSelected()){
-            //chamando para realizar o preenchimento da tabela
-            txtDado.enable(false);
-            trazerDados();
-           
-        }
-        
-        
-        
-    }//GEN-LAST:event_rbTodosActionPerformed
-
-    private void rbTodosInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_rbTodosInputMethodTextChanged
-
-    }//GEN-LAST:event_rbTodosInputMethodTextChanged
 
     private void tblLeitoresComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tblLeitoresComponentShown
         // TODO add your handling code here:
@@ -470,15 +337,58 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_rbNomeActionPerformed
 
     private void txtDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDadoActionPerformed
-        
+
+        MostrarDadosTable();
     }//GEN-LAST:event_txtDadoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+ 
+        //refazer essa parte *******************************************
+        //pegando as linhas selecionadas
         
-        //essa será melhor com o banco de dados
-        //visto que no momento estou utilizando arquivo txt e ArrayList
-        
+        ///se foi selecionada uma linha somente
+        if(tblLeitores.getSelectedRowCount() == 1){
+            
+            //pegando a linha selecionada
+            if(desativarDadosSelecionados(tblLeitores.getSelectedRow())){
+                new Mensagens().mensagemInformativa("Dados excluídos com sucesso!");
+            }else{
+                new Mensagens().mensagemAlerta("Erro ao excluir os dados!");
+            }
+
+        //se for selecionado mais de uma linha
+        }else if(tblLeitores.getSelectedRowCount() > 1){
+            
+            if(desativarDadosSelecionados2(tblLeitores.getSelectedRows())){
+                new Mensagens().mensagemInformativa("Dados foram excluídos com sucesso!");
+            }else{
+                new Mensagens().mensagemAlerta("Erro ao excluir os dados!");
+            }
+            
+        }else{
+            new Mensagens().mensagemAlerta("Erro, verifique!");
+        }
+
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void txtDadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDadoKeyTyped
+     
+    }//GEN-LAST:event_txtDadoKeyTyped
+
+    private void btnImpressaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpressaoActionPerformed
+        //mostrar os dados do usuário selecionado
+        
+        if(tblLeitores.getSelectedRowCount() == 1){
+            mostrarDadosSelecionado(tblLeitores.getSelectedRow());
+        }else{
+            new Mensagens().mensagemAlerta("Selecione somente uma linha. O Contrário, aconselho que vai a parte de relatórios.");
+        }
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_btnImpressaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -490,17 +400,192 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JRadioButton rbCPF;
     private javax.swing.JRadioButton rbNome;
     private javax.swing.JRadioButton rbRG;
-    private javax.swing.JRadioButton rbTodos;
     private javax.swing.JTable tblLeitores;
     private javax.swing.JTextField txtDado;
     // End of variables declaration//GEN-END:variables
+
+ public void trazerDados(List<Leitor> leitoresRecuperados){
+        
+        //criando o modelo da tabela
+        DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
+
+        //Zerando as linhas
+        modelo.setNumRows(0);
+                
+        //chamndo o arquivo txt para ser lido, e colocar na tabela os valores
+        //Arquivo arquivoTxt = new Arquivo();
+        //leitores = arquivoTxt.lerArquivo("ArquivoLeitores");
+        
+        //realizando se a lista está vazia
+        if(leitoresRecuperados.isEmpty()){
+            new Mensagens().mensagemAlerta("Não houve dados a serem recuperados.");
+        }else{
+            try{
+                for (Leitor l : leitoresRecuperados) {
+                    modelo.addRow(new Object[]{
+                        l.getId_leitor(),
+                        l.getNome(),
+                        l.getCpf(),
+                        l.getTelefone()
+                    });
+                  }
+            }catch(Exception e){
+                new Mensagens().mensagemAlerta("Houve erro na recuperação dos dados!");
+            }
+        }  
+    }
+ 
+ public void MostrarDadosTable(){
+        String valor = "";
+        String dados = txtDado.getText();
+        
+        if(!rbCPF.isSelected() && !rbNome.isSelected() && !rbRG.isSelected()){
+            new Mensagens().mensagemAlerta("Selecione uma das opções ao lado.");
+        }else if(!new VerificadorString().verificarHaSql(dados) || dados.isEmpty()){
+            new Mensagens().mensagemErro("Verifique as informações apresentadas!");
+        }else{
+            if(rbCPF.isSelected()){
+                valor = "cpf"; 
+            }
+            else if(rbNome.isSelected()){
+                valor = "nome";
+            }
+            else if(rbRG.isSelected()){
+                valor = "rg";
+            }
+            //fazendo a busca no Banco de dados
+            List<Leitor> dadosLeitores = new ArrayList<>();
+            dadosLeitores = RecuperacaoDados.receuparacaoDadosLeitores(valor, dados);
+            
+            trazerDados(dadosLeitores);
+            
+        }
+ }
+ 
+ public Boolean desativarDadosSelecionados(int linhaSelecionada){
+        
+        //criando o modelo da tabela
+        DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
+        
+        //chamndo o arquivo txt para ser lido, e colocar na tabela os valores
+        //Arquivo arquivoTxt = new Arquivo();
+        //leitores = arquivoTxt.lerArquivo("ArquivoLeitores");
+        
+        //realizando se a lista está vazia
+
+        try{            
+            //pegando a primeira linha e primeira coluna (Id_leitor)
+            Object obj = modelo.getValueAt(linhaSelecionada, 0);
+
+            if(new DesativacaoDados().desativarDados(Integer.parseInt(obj+""))){
+                MostrarDadosTable();
+            }
+            
+        }catch(NumberFormatException e){
+            new Mensagens().mensagemAlerta(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+ 
+ public Boolean desativarDadosSelecionados2(int linhasSelecionadas[]){
+        
+        //criando o modelo da tabela
+        DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
+        
+        for(int i = linhasSelecionadas.length; i > 0;i--){
+
+            if(i-1 >= 0){
+                try{            
+                   //pegando a primeira linha e primeira coluna (Id_leitor)
+                   Object obj = modelo.getValueAt((i-1), 0);
+                   new DesativacaoDados().desativarDados(Integer.parseInt(obj+""));
+
+                }catch(NumberFormatException e){
+                   new Mensagens().mensagemAlerta(e.getMessage());
+                   return false;
+                }
+            }
+        }
+        MostrarDadosTable();
+        return true;
+    }  
+ 
+ public Boolean editarDadosSelecionado(int linhaSelecionada){
+     
+        //criando o modelo da tabela
+        DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
+
+        
+        try{            
+            //pegando a primeira linha e primeira coluna (Id_leitor)
+            Object obj = modelo.getValueAt(linhaSelecionada, 0);
+
+            //chamando a tela de Cadastro de Leitor, para realizar a edição
+            //trazendo os dados através do ID do usuário
+            List<Leitor> leitorRecuperado = new ArrayList<>(
+                    RecuperacaoDados.receuparacaoDadosLeitores(
+                            "id_leitor", 
+                            obj.toString())
+            );
+            
+            for(Leitor l: leitorRecuperado){
+                TelaLeitorEditar editarLeitor = new TelaLeitorEditar(l);
+                editarLeitor.setVisible(true);
+                URL url = this.getClass().getResource("/images/icone_menu.png"); 
+                Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url); 
+                editarLeitor.setIconImage(iconeTitulo);
+            }
+            
+            
+        }catch(NumberFormatException e){
+            new Mensagens().mensagemAlerta(e.getMessage());
+            return false;
+        }
+        return true;
+ }
+ public Boolean mostrarDadosSelecionado(int linhaSelecionada){
+     
+        //criando o modelo da tabela
+        DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
+
+        
+        try{            
+            //pegando a primeira linha e primeira coluna (Id_leitor)
+            Object obj = modelo.getValueAt(linhaSelecionada, 0);
+
+            //chamando a tela de Cadastro de Leitor, para realizar a edição
+            //trazendo os dados através do ID do usuário
+            List<Leitor> leitorRecuperado = new ArrayList<>(
+                    RecuperacaoDados.receuparacaoDadosLeitores(
+                            "id_leitor", 
+                            obj.toString())
+            );
+            
+            for(Leitor l: leitorRecuperado){
+                new Mensagens().mensagemLeitorDados(l);
+                
+            }
+            
+            
+        }catch(NumberFormatException e){
+            new Mensagens().mensagemAlerta(e.getMessage());
+            return false;
+        }
+        return true;
+ }
+ 
 }
+
+

@@ -1,6 +1,7 @@
 
 package classes.bancodados;
 
+import classes.Mensagens;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,23 +19,15 @@ public class FabricaConexao {
             final String url = prop.getProperty("banco.url");
             final String ususario = prop.getProperty("banco.urs");
             final String senha = prop.getProperty("banco.pssd");
-            
-            
-            
+
             //retornando a conexao com o banco de dados
             Connection conexao = DriverManager.getConnection(url, ususario, senha);
-            System.out.println("Conexão realizada com sucesso!");
             return conexao;
-            
-            
-            
-            
+
             //solução de erros
         } catch (SQLException | NullPointerException e) {
             
-            System.out.println("""
-                               Erro na conexão com o banco de dados.
-                               Descrição: """ + e.getMessage());
+            new Mensagens().mensagemErro(e.getMessage());
             
             throw new RuntimeException(e);
         }
@@ -51,11 +44,10 @@ public class FabricaConexao {
 
             return prop;       
             
-         } catch (NullPointerException | IOException e) {
-             
-             System.out.println("Erro getProperties(): " + e.getMessage());
-             return null;
+         } catch (NullPointerException | IOException e) { 
+             new Mensagens().mensagemErro(e.getMessage());
          }
+        return null;
     }
     
 }

@@ -19,6 +19,8 @@ public class Memoria {
     private TipoComando ultimaOperacao = null;
     private String textoAtual = "";
     private String textoBuffer = "0";
+  
+    
     
     private Memoria() {}
     
@@ -175,6 +177,7 @@ public class Memoria {
                 }
             }
             observador.forEach(o -> o.valorAlterado(getTextoAtual()));
+            
         }catch(NumberFormatException e){
             ultimaOperacao = null;
             substituir = true;
