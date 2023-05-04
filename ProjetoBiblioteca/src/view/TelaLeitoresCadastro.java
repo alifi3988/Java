@@ -329,14 +329,15 @@ public class TelaLeitoresCadastro extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel24)
                         .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel25)
-                        .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel22)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -384,7 +385,7 @@ public class TelaLeitoresCadastro extends javax.swing.JInternalFrame {
                     .addGroup(PainelCadastro2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel33)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelCadastro2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,7 +394,7 @@ public class TelaLeitoresCadastro extends javax.swing.JInternalFrame {
         PainelCadastro2Layout.setVerticalGroup(
             PainelCadastro2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PainelCadastro2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel33)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -403,7 +404,7 @@ public class TelaLeitoresCadastro extends javax.swing.JInternalFrame {
                 .addGroup(PainelCadastro2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnLimpar))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -416,13 +417,15 @@ public class TelaLeitoresCadastro extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PainelCadastro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PainelCadastro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleName("Página do Leitor");
         getAccessibleContext().setAccessibleDescription("Página do Leitor");
 
-        setBounds(0, 0, 660, 505);
+        setBounds(0, 0, 660, 527);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
@@ -432,38 +435,37 @@ public class TelaLeitoresCadastro extends javax.swing.JInternalFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        //int id_usuario = userLogado;
-        String nome = txtNome.getText();
-        String dataNascimento = txtDataNascimento.getText();        
-        String cpf = new VerificadorString().tratarTexto(txtCPF.getText());
-        String rg = new VerificadorString().tratarTexto(txtRG.getText());
-        String sexo = cbSexo.getSelectedItem().toString();
-        String cep = new VerificadorString().tratarTexto(txtCEP.getText());
-        String bairro = txtBairro.getText();
-        String complemento = txtComplemento.getText();
-        String endereco = txtEndereco.getText();
-        String numero = txtNumero.getText();
-        String estado = cbbEstado.getSelectedItem().toString();
-        String telefone = new VerificadorString().tratarTexto(txtTelefone.getText());
-        boolean status = true;
-        
+        Leitor leitor = colherDadosLeitor();
   
         if(dadosZerado() == false || userLogado == null){
             new Mensagens().mensagemAlerta("Dados em branco. Verifique!"); 
         }else{
             if(
-                    new VerificadorString().tratarDados(nome) == true &&
-                    new VerificadorString().validarData(dataNascimento) == true &&
-                    new VerificadorString().validarCPF(cpf) == true){
+                    new VerificadorString().tratarDados(leitor.getNome()) == true &&
+                    new VerificadorString().validarData(leitor.getDataNascimento()) == true &&
+                    new VerificadorString().validarCPF(leitor.getCpf()) == true){
 
                 //teste
                 int idUsuarioLogado = userLogado.getId_usuario();
 
                 //realizando o cadastro no banco de dados
                 CadastroDados cadastro = new CadastroDados();
-                if(cadastro.cadastroLeitor(idUsuarioLogado, nome, dataNascimento, 
-                        cpf, rg, sexo, cep, bairro, complemento, 
-                        endereco, numero, estado, telefone, status)){
+                if(cadastro.cadastroLeitor(
+                        leitor.getId_usuario(),
+                        leitor.getNome(), 
+                        leitor.getDataNascimento(),
+                        leitor.getCpf(), 
+                        leitor.getRg(), 
+                        leitor.getSexo(), 
+                        leitor.getCep(), 
+                        leitor.getBairro(), 
+                        leitor.getComplemento(), 
+                        leitor.getEndereco(), 
+                        leitor.getNumero(), 
+                        leitor.getEstado(), 
+                        leitor.getTelefone(), 
+                        leitor.getStatus(), 
+                        leitor.getCidade())){
                     new Mensagens().mensagemInformativa("Cadastro realizado com sucesso!");
                     zerarCampos();
                 }
@@ -492,12 +494,13 @@ public class TelaLeitoresCadastro extends javax.swing.JInternalFrame {
             cbbEstado.setSelectedItem(cep.getEstado());
             txtCidade.setText(cep.getCidade());
             
-            if(cep.getBairro() == "" || cep.getLogradouro() == "" || cep.getEstado() == ""){
+            if(cep.getBairro() == "" || cep.getLogradouro() == "" || cep.getEstado() == "" || cep.getEstado() == ""){
               
                 txtCidade.enable(true);
                 txtBairro.enable(true);
                 txtEndereco.enable(true);
                 cbbEstado.enable(true);
+         
             }
             
        } catch (IOException ex) {
@@ -593,6 +596,26 @@ public class TelaLeitoresCadastro extends javax.swing.JInternalFrame {
         txtNumero.setText("");
         cbbEstado.setSelectedIndex(0);
         txtTelefone.setText("");
+    }
+
+    private Leitor colherDadosLeitor() {
+        //int id_usuario = userLogado;
+        String nome = txtNome.getText();
+        String dataNascimento = txtDataNascimento.getText();        
+        String cpf = new VerificadorString().tratarTexto(txtCPF.getText());
+        String rg = new VerificadorString().tratarTexto(txtRG.getText());
+        String sexo = cbSexo.getSelectedItem().toString();
+        String cep = new VerificadorString().tratarTexto(txtCEP.getText());
+        String bairro = txtBairro.getText();
+        String complemento = txtComplemento.getText();
+        String endereco = txtEndereco.getText();
+        String numero = txtNumero.getText();
+        String estado = cbbEstado.getSelectedItem().toString();
+        String telefone = new VerificadorString().tratarTexto(txtTelefone.getText());
+        boolean status = true;
+        String cidade = new VerificadorString().tratarTexto(txtCidade.getText());
+        
+        return new Leitor(0, userLogado.getId_usuario(), nome, dataNascimento, cpf, rg, sexo, cep, bairro, complemento, endereco, numero, estado, telefone, status, cidade);
     }
    
    

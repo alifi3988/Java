@@ -1,6 +1,11 @@
 
 package view;
 
+import classes.Livros;
+import classes.Mensagens;
+import classes.VerificadorString;
+import classes.bancodados.CadastroDados;
+
 public class TelaLivrosCadastro extends javax.swing.JInternalFrame {
 
 
@@ -186,6 +191,11 @@ public class TelaLivrosCadastro extends javax.swing.JInternalFrame {
         );
 
         jButton4.setText("Salvar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Limpar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -259,6 +269,18 @@ public class TelaLivrosCadastro extends javax.swing.JInternalFrame {
   
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        //verificar
+        if(RealizarCadastro()){
+            new Mensagens().mensagemInformativa("Cadastro realizado com sucesso!");
+            limparCampos();
+        }else{
+            new Mensagens().mensagemInformativa("Erro ao realizar o cadastro!");
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -287,4 +309,40 @@ public class TelaLivrosCadastro extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtPratilheira;
     private javax.swing.JTextField txtSetor;
     // End of variables declaration//GEN-END:variables
+
+    private void salvarDados() {
+        
+        //cadastroLivro
+        
+        
+    }
+    
+    
+    private Boolean RealizarCadastro(){
+        
+        Livros livros = new Livros(
+                txtNome.getText(), 
+                txtAutora.getText(), 
+                txtEditora.getText(), 
+                new VerificadorString().tratarTexto(txtDataEntrada.getText()), 
+                cbbGenero.getSelectedItem().toString(), 
+                true, 
+                txtCorredor.getText(), 
+                txtPratilheira.getText(), 
+                txtSetor.getText());
+        
+        return new CadastroDados().cadastroLivro(livros);
+    }
+
+    private void limparCampos() {
+        txtAutora.setText("");
+        txtCorredor.setText("");
+        txtDataEntrada.setText("");
+        txtEditora.setText("");
+        txtNome.setText("");
+        txtPratilheira.setText("");
+        txtSetor.setText("");
+        
+        cbbGenero.setSelectedIndex(0);
+    }
 }

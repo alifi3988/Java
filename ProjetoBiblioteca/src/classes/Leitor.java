@@ -18,6 +18,7 @@ public final class Leitor {
     private String estado;
     private String telefone;
     private Boolean status;
+    private String cidade;
 
     
     //métodos
@@ -39,7 +40,7 @@ public final class Leitor {
         setStatus(null);
     }
 
-    public Leitor(int id_leitor, int id_usuario, String nome, String dataNascimento, String cpf, String rg, String sexo, String cep, String bairro, String complemento, String endereco, String numero, String estado, String telefone, Boolean status) {
+    public Leitor(int id_leitor, int id_usuario, String nome, String dataNascimento, String cpf, String rg, String sexo, String cep, String bairro, String complemento, String endereco, String numero, String estado, String telefone, Boolean status, String cidade) {
         
         setId_leitor(id_leitor);
         setId_usuario(id_usuario);
@@ -56,6 +57,7 @@ public final class Leitor {
         setEstado(estado);
         setTelefone(telefone);
         setStatus(status);
+        setCidade(cidade);
         
     }
 
@@ -76,6 +78,7 @@ public final class Leitor {
         setEstado(null);
         setTelefone(null);
         setStatus(null);
+        setCidade(null);
     }
 
     //métodos GETS e SETS   
@@ -199,10 +202,18 @@ public final class Leitor {
     public void setStatus(Boolean status){
         this.status = status;
     }
-    
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
     public boolean adicionarLeitor(int id_leitor, int id_usuario, String nome, String dataNascimento, String cpf, 
             String rg, String sexo, String cep, String bairro, String complemento,
-            String endereco, String numero, String estado, String telefone, Boolean status){
+            String endereco, String numero, String estado, String telefone, Boolean status, String cidade){
         try{
             setId_leitor(id_leitor);
             setId_usuario(id_usuario);
@@ -219,6 +230,7 @@ public final class Leitor {
             setEstado(estado);
             setTelefone(telefone);
             setStatus(status);
+            setCidade(cidade);
             
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -230,21 +242,22 @@ public final class Leitor {
     @Override
     public String toString() {
         
-        String leitor = id_leitor +
-                "," + id_usuario +
-                "," + nome + 
-                "," + dataNascimento + 
-                "," + cpf + 
-                "," + rg + 
-                "," + sexo + 
-                "," + cep + 
-                "," + bairro + 
-                "," + complemento +
-                "," + endereco + 
-                "," + numero +
-                "," + estado + 
-                "," + telefone + 
-                "," + status;
+        String leitor = getId_leitor() +
+                "," + getId_usuario() +
+                "," + getNome() + 
+                "," + getDataNascimento() + 
+                "," + getCpf() + 
+                "," + getRg() + 
+                "," + getSexo() + 
+                "," + getCep() + 
+                "," + getBairro() + 
+                "," + getComplemento() +
+                "," + getEndereco() + 
+                "," + getNumero() +
+                "," + getCidade() +
+                "," + getEstado() + 
+                "," + getTelefone() + 
+                "," + getStatus();
         
         return leitor;
     }

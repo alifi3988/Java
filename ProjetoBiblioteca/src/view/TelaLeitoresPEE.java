@@ -2,6 +2,7 @@
 package view;
 
 import classes.Leitor;
+import classes.Livros;
 import classes.Mensagens;
 import classes.VerificadorString;
 import classes.bancodados.DesativacaoDados;
@@ -303,7 +304,11 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
             
             //criando o modelo da tabela
             DefaultTableModel modelo = (DefaultTableModel) tblLeitores.getModel();
-
+            
+            //fechando a tela para atualizar a tabela
+            this.dispose();
+            
+            
             //Zerando as linhas da tabela
             modelo.setNumRows(0);
             
@@ -377,6 +382,7 @@ public class TelaLeitoresPEE extends javax.swing.JInternalFrame {
 
     private void btnImpressaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpressaoActionPerformed
         //mostrar os dados do usuário selecionado
+        List<Livros> livros = new ArrayList<>();
         
         if(tblLeitores.getSelectedRowCount() == 1){
             mostrarDadosSelecionado(tblLeitores.getSelectedRow());

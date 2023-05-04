@@ -4,6 +4,17 @@
  */
 package view;
 
+import classes.Leitor;
+import classes.Livros;
+import classes.Mensagens;
+import classes.VerificadorString;
+import classes.bancodados.RecuperacaoDados;
+import classes.bancodados.recuperacaoData;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author alifi
@@ -52,6 +63,12 @@ public class TelaRetiradaLivro extends javax.swing.JInternalFrame {
 
         jLabel32.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel32.setText("Retirada de livros");
+
+        txtIDLeitor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDLeitorActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Informa o ID do Leitor: ");
 
@@ -197,6 +214,9 @@ public class TelaRetiradaLivro extends javax.swing.JInternalFrame {
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
+        txtIDLeitor.getAccessibleContext().setAccessibleDescription("Informe o dado corretamente e precione \"Enter\".");
+        txtIDLivro.getAccessibleContext().setAccessibleDescription("Informe o dado corretamente e precione \"Enter\".");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -225,8 +245,42 @@ public class TelaRetiradaLivro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void cbTempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTempoActionPerformed
-        // TODO add your handling code here:
+        
+        int item = cbTempo.getSelectedIndex();
+        
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String data = formatter.format(new Date());
+        String dataString = "";
+        //1 Semana 
+        //15 Dias
+        //1 Mês
+        //1 Mês e meio
+        //2 Meses
+        switch (item) {
+            case 1 -> {
+                dataString = recuperacaoData.retornarSomaData(data, "data", "7");
+            }
+            case 2 -> {
+            }
+            case 3 -> {
+            }
+            case 4 -> {
+            }
+            case 5 -> {
+            }
+            default -> new Mensagens().mensagemAlerta("Verifique os dados informados!");
+        }  
+        
+        txtDataEntrega.setText(dataString);
+        
     }//GEN-LAST:event_cbTempoActionPerformed
+
+    private void txtIDLeitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDLeitorActionPerformed
+        //realizar a pesquisa do IDLeitor assim que precionar o enter
+        
+        
+    }//GEN-LAST:event_txtIDLeitorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -260,4 +314,24 @@ public class TelaRetiradaLivro extends javax.swing.JInternalFrame {
         cbTempo.setSelectedIndex(0);
     }
 
+    
+    private void pesquisarPorID(String Dado){
+        
+        if(Dado == "idLeitor"){
+            List<Leitor> leitor = new ArrayList<>();
+            leitor = RecuperacaoDados.receuparacaoDadosLeitores("idLeitor", Dado);
+
+            for(Leitor l: leitor){
+                txtNomeLeitor.setText(l.getNome());
+            }
+        }else if(Dado == "idLivro"){
+            List<Livros> livros = new ArrayList<>();
+            
+            livros = RecuperacaoDados.recuperacaoDadosLivros("id_livro", Dado);
+            
+            for(Livros l: livros){
+                txtNomeLivro.setText(l.getNome());
+            }
+        }
+    }
 }

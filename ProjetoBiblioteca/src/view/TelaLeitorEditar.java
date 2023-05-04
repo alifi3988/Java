@@ -24,7 +24,6 @@ public final class TelaLeitorEditar extends javax.swing.JFrame {
     
     public TelaLeitorEditar(Leitor leitor) {
         initComponents();
-        System.out.println(leitor.getNome());
         preencherCampos(leitor);
     }
     
@@ -433,35 +432,19 @@ public final class TelaLeitorEditar extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        //int id_usuario = userLogado;
-        String idLeitor = lblIdLeitor.getText();
-        String nome = txtNome.getText();
-        String dataNascimento = txtDataNascimento.getText();
-        String cpf = new VerificadorString().tratarTexto(txtCPF.getText());
-        String rg = new VerificadorString().tratarTexto(txtRG.getText());
-        String sexo = cbSexo.getSelectedItem().toString();
-        String cep = new VerificadorString().tratarTexto(txtCEP.getText());
-        String bairro = txtBairro.getText();
-        String complemento = txtComplemento.getText();
-        String endereco = txtEndereco.getText();
-        String numero = txtNumero.getText();
-        String estado = cbbEstado.getSelectedItem().toString();
-        String telefone = new VerificadorString().tratarTexto(txtTelefone.getText());
-        boolean status = true;
+        Leitor leitor = colherDadosLeitor();
         
-        Leitor novoLeitor = new Leitor(Integer.parseInt(idLeitor), 0, nome, dataNascimento, cpf, rg, sexo, cep, bairro, complemento, endereco, numero, estado, telefone, status);
-
         if(dadosZerado() == false){
             new Mensagens().mensagemAlerta("Dados em branco. Verifique!");
         }else{
             if(
-                new VerificadorString().tratarDados(nome) == true &&
-                new VerificadorString().validarData(dataNascimento) == true &&
-                new VerificadorString().validarCPF(cpf) == true){
+                new VerificadorString().tratarDados(leitor.getNome()) == true &&
+                new VerificadorString().validarData(leitor.getDataNascimento()) == true &&
+                new VerificadorString().validarCPF(leitor.getCpf()) == true){
 
                 //teste
                 //realizando o cadastro no banco de dados
-                if(new UpdateDados().editarDadosCompleto(novoLeitor)){
+                if(new UpdateDados().editarDadosCompleto(leitor)){
                     new Mensagens().mensagemInformativa("Edição realizado com sucesso!");
                 }
                 else{
@@ -577,8 +560,9 @@ public final class TelaLeitorEditar extends javax.swing.JFrame {
         String numero = txtNumero.getText();
         String estado = cbbEstado.getSelectedItem().toString();
         String telefone = new VerificadorString().tratarTexto(txtTelefone.getText());
+        String cidade = new VerificadorString().tratarTexto(txtCidade.getText());
         
-        return !(nome.isEmpty() || dataNascimento.isEmpty() || cpf.isEmpty() || rg.isEmpty() || rg.isEmpty() || sexo.isEmpty() || cep.isEmpty() || bairro.isEmpty() || endereco.isEmpty() || numero.isEmpty() || estado.isEmpty() || telefone.isEmpty()); 
+        return (nome.isEmpty() || dataNascimento.isEmpty() || cpf.isEmpty() || rg.isEmpty() || rg.isEmpty() || sexo.isEmpty() || cep.isEmpty() || bairro.isEmpty() || endereco.isEmpty() || numero.isEmpty() || estado.isEmpty() || telefone.isEmpty() || cidade.isEmpty()); 
     }
     
     public void zerarCampos(){
@@ -597,6 +581,7 @@ public final class TelaLeitorEditar extends javax.swing.JFrame {
         txtNumero.setText("");
         cbbEstado.setSelectedIndex(0);
         txtTelefone.setText("");
+        txtCidade.setText("");
     }
     
     public void preencherCampos(Leitor leitor){
@@ -615,6 +600,28 @@ public final class TelaLeitorEditar extends javax.swing.JFrame {
         txtNumero.setText(leitor.getNumero());
         cbbEstado.setSelectedItem(leitor.getEstado());
         txtTelefone.setText(leitor.getTelefone());
+        txtCidade.setText(leitor.getCidade());
+    }
+
+    private Leitor colherDadosLeitor() {
+        //int id_usuario = userLogado;
+        String idLeitor = lblIdLeitor.getText();
+        String nome = txtNome.getText();
+        String dataNascimento = txtDataNascimento.getText();
+        String cpf = new VerificadorString().tratarTexto(txtCPF.getText());
+        String rg = new VerificadorString().tratarTexto(txtRG.getText());
+        String sexo = cbSexo.getSelectedItem().toString();
+        String cep = new VerificadorString().tratarTexto(txtCEP.getText());
+        String bairro = txtBairro.getText();
+        String complemento = txtComplemento.getText();
+        String endereco = txtEndereco.getText();
+        String numero = txtNumero.getText();
+        String estado = cbbEstado.getSelectedItem().toString();
+        String telefone = new VerificadorString().tratarTexto(txtTelefone.getText());
+        boolean status = true;
+        String cidade = new VerificadorString().tratarTexto(txtCidade.getText());
+        
+        return new Leitor(Integer.parseInt(idLeitor), 0, nome, dataNascimento, cpf, rg, sexo, cep, bairro, complemento, endereco, numero, estado, telefone, status, cidade);
     }
    
    

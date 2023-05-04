@@ -1,7 +1,4 @@
 package classes;
-
-import javax.swing.JOptionPane;
-
 public class Mensagens extends javax.swing.JOptionPane {
 
     
@@ -43,6 +40,12 @@ public class Mensagens extends javax.swing.JOptionPane {
                 "Endereço: " + leitor.getEndereco() + ", " + leitor.getNumero() + ", " + leitor.getBairro() + ", " + leitor.getCep();
         
         showMessageDialog(null, mensagem, "Dados do Leitor", INFORMATION_MESSAGE);
+        
+    }
+    
+    public void mensagemVerificacao(String mensagem){
+        
+        //showConfirmDialog(this, message)
         
     }
  
