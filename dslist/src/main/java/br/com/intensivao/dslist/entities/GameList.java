@@ -16,14 +16,14 @@ public class GameList {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nome;
+	private String name;
 	
 	public GameList() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public GameList(String nome) {
-		this.nome = nome;
+		this.name = nome;
 	}
 
 	public Long getId() {
@@ -35,11 +35,11 @@ public class GameList {
 	}
 
 	public String getNome() {
-		return nome;
+		return name;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.name = nome;
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public class GameList {
 
 	@Override
 	public String toString() {
-		return "GameList [id=" + id + ", nome=" + nome + "]";
+		return "GameList [id=" + id + ", nome=" + name + "]";
 	}
 
 }
