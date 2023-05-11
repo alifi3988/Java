@@ -3,6 +3,7 @@ package br.com.intensivao.dslist.dto;
 import java.util.Objects;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import br.com.intensivao.dslist.entities.Game;
 
@@ -12,7 +13,8 @@ import br.com.intensivao.dslist.entities.Game;
  * @author alifi
  *
  */
-public class GameDto {
+@Component
+public class GameDTO {
 	
 	private Long 		id;
 	private String		title;
@@ -24,11 +26,11 @@ public class GameDto {
 	private String 		shortDescription;
 	private String 		longDescription;
 	
-	public GameDto() {
+	public GameDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GameDto(Game entity) {
+	public GameDTO(Game entity) {
 		//copiando as propriedades de uma entidade para outra
 		BeanUtils.copyProperties(entity, this);
 	}
@@ -118,7 +120,7 @@ public class GameDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GameDto other = (GameDto) obj;
+		GameDTO other = (GameDTO) obj;
 		return Objects.equals(id, other.id);
 	}
 

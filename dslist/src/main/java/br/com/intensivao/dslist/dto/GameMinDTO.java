@@ -6,7 +6,7 @@ import br.com.intensivao.dslist.entities.Game;
 
 
 @Component
-public class GameMinDto {
+public class GameMinDTO {
 	
 	private Long 		id;
 	private String		title;
@@ -15,11 +15,11 @@ public class GameMinDto {
 	private String 		shortDescription;
 	
 	//CONSTRUTORES
-	public GameMinDto() {
+	public GameMinDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public GameMinDto(Game entity) {
+	public GameMinDTO(Game entity) {
 		id = entity.getId();
 		title = entity.getTitle();
 		year = entity.getYear();
