@@ -3,6 +3,7 @@ package br.com.intensivao.dslist.dto;
 import org.springframework.stereotype.Component;
 
 import br.com.intensivao.dslist.entities.Game;
+import br.com.intensivao.dslist.projections.GameMinProjection;
 
 
 @Component
@@ -25,6 +26,14 @@ public class GameMinDTO {
 		year = entity.getYear();
 		imgUrl = entity.getImgUrl();
 		shortDescription = entity.getShortDescription();
+	}
+	
+	public GameMinDTO(GameMinProjection projection) {
+		id = projection.getId();
+		title = projection.getTitle();
+		year = projection.getYear();
+		imgUrl = projection.getImagem();
+		shortDescription = projection.getDescricao();
 	}
 	
 	
